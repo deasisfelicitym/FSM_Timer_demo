@@ -1,0 +1,30 @@
+module fsm_timer_demo(out,timer,state,t,clk,ovr,rst_n);
+
+ //ports
+ input      	  t;
+ input      	  clk;
+ input            ovr
+ input      	  rst_n;
+ output reg 	  out;
+ output reg [3.0] timer;
+ output reg [3:0] state;
+
+ // state assignments
+ localparam [3:0] S0 = 4'b0000;
+ localparam [3:0] S1 = 4'b0001;
+ localparam [3:0] S2 = 4'b0010;
+ localparam [3:0] S3 = 4'b0011;
+ reg [3:0] nxt;
+ reg [3:0] pre;
+
+ // input block
+ always @(t,pre)begin
+	case (pre)
+		
+		S0: nxt = t? S1:S0;
+		S1: nxt = t? S2:S0;
+		S2: nxt = t? S2:S3;
+		S3: nxt = t? S4:S0;
+		default: nxt = S0;
+	endcase
+ end
