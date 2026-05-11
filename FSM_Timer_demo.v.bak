@@ -22,7 +22,7 @@ module fsm_timer_demo(out,timer,state,t,clk,ovr,rst_n);
 	case (pre)
 		
 		S0: nxt = t? S1:S0;
-		S1: nxt = t? S2:S0;
+		S1: nxt = t? S2:S1;
 		S2: nxt = t? S2:S3;
 		S3: nxt = t? S4:S0;
 		default: nxt = S0;

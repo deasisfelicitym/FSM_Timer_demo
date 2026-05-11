@@ -18,13 +18,25 @@ module fsm_timer_demo(out,timer,state,t,clk,ovr,rst_n);
  reg [3:0] pre;
 
  // input block
- always @(t,pre)begin
-	case (pre)
+ always @(pre,nxt)begin
+	if (ovr) begin
+           nxt = S3;
+	end
+	else begin
+	   case (pre)
 		
-		S0: nxt = t? S1:S0;
-		S1: nxt = t? S2:S1;
-		S2: nxt = t? S2:S3;
-		S3: nxt = t? S4:S0;
+		S0: nxt = S1;
+
+		S1: if (t == 4'd3) nxt = S2;
+		    else nxt = S1;
+
+		S2: if (t == 4'd3) nxt = S0;
+		    else nxt = S2;
+
+		S3: nxt = S0;
 		default: nxt = S0;
-	endcase
- end
+	  endcase
+       end
+
+
+endmodule
